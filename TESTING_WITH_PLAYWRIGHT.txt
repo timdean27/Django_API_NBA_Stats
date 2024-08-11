@@ -1,0 +1,21 @@
+https://playwright.dev/python/docs/api-testing
+
+
+Run the Tests: Execute pytest in the terminal:
+pip install pytest
+type into terminal:
+pytest
+
+
+we can run script to get print statments 
+
+
+NOTES******
+INDEX*******
+
+browser.new_context() 
+
+In Playwright, the browser.new_context() method is used to create a new browser context. 
+A browser context is essentially a new, isolated environment within the same browser instance. 
+Each context operates independently, meaning that pages in different contexts do not share cookies, cache, or other session data.
+Security: Since contexts are isolated, they provide a secure environment to test different applications or states without data leakage.
