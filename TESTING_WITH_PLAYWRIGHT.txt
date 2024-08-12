@@ -6,6 +6,18 @@ pip install pytest
 type into terminal:
 pytest
 
+How pytest Discovers and Runs Tests:
+File Naming Conventions:
+
+pytest looks for files that start with test_ or end with _test.py. For example, test_api.py, api_tests.py, or test_api_tests.py would all be discovered by pytest.
+Since your file is named api_tests.py, it matches the pattern of ending with _test.py, so pytest will include it in its test discovery.
+Function Naming Conventions:
+
+pytest looks for functions that start with test_ within these files. Functions like test_home_page(), test_player_list(), and test_player_detail() in your api_tests.py file will be automatically recognized as test functions.
+Test Discovery Process:
+
+When you run the pytest command in the terminal, pytest searches through the current directory (and subdirectories) for files that match the naming convention.
+It collects all the test functions within those files and executes them.
 
 we can run script to get print statments 
 
