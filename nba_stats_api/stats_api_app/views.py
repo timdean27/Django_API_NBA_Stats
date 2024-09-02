@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Player, Player_Season_stats_model, Player_LastFive_stats_model
+from .models import NBAPlayer, NBAPlayerSeasonStats, NBAPlayersLast5Games
 from .serializers import PlayerSerializer, PlayerSeasonStatsSerializer, PlayerLastFiveStatsSerializer
 
 def home(request):
@@ -11,7 +11,7 @@ def home(request):
 @api_view(['GET', 'POST'])
 def player_list(request):
     if request.method == 'GET':
-        players = Player.objects.all()
+        players = NBAPlayer.objects.all()
         serializer = PlayerSerializer(players, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -24,8 +24,8 @@ def player_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def player_season_details(request, pk):
     try:
-        player_stats = Player_Season_stats_model.objects.get(player_id=pk)
-    except Player_Season_stats_model.DoesNotExist:
+        player_stats = NBAPlayerSeasonStats.objects.get(player_id=pk)
+    except NBAPlayerSeasonStats.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
@@ -46,8 +46,8 @@ def player_season_details(request, pk):
 @api_view(['GET', 'PUT', 'DELETE'])
 def player_last_five_details(request, pk):
     try:
-        player_stats = Player_LastFive_stats_model.objects.get(player_id=pk)
-    except Player_LastFive_stats_model.DoesNotExist:
+        player_stats = NBAPlayersLast5Games.objects.get(player_id=pk)
+    except NBAPlayersLast5Games.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':

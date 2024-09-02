@@ -1,69 +1,82 @@
 from django.db import models
 
-class Player(models.Model):
-    name = models.CharField(max_length=100)
-    team = models.CharField(max_length=100)
+class NBAPlayer(models.Model):
+    full_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    href = models.URLField(max_length=255, unique=True)
+    img_src = models.URLField(max_length=255)
+    player_id = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return f"{self.name} ({self.team})"
+        return self.full_name
 
 
-class Player_Season_stats_model(models.Model):
-    player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True)
-    season_average_games_played = models.IntegerField() 
-    season_average_minutes_per_game = models.FloatField()  
-    season_average_points_per_game = models.FloatField()  
-    season_average_field_goals_made = models.FloatField()  
-    season_average_field_goals_attempted = models.FloatField()  
-    season_average_field_goal_percentage = models.FloatField() 
-    season_average_three_points_made = models.FloatField()  
-    season_average_three_points_attempted = models.FloatField()  
-    season_average_three_point_percentage = models.FloatField() 
-    season_average_free_throws_made = models.FloatField()  
-    season_average_free_throws_attempted = models.FloatField()  
-    season_average_free_throw_percentage = models.FloatField() 
-    season_average_offensive_rebounds = models.FloatField()  
-    season_average_defensive_rebounds = models.FloatField()  
-    season_average_total_rebounds = models.FloatField()  
-    season_average_assists = models.FloatField()  
-    season_average_turnovers = models.FloatField()  
-    season_average_steals = models.FloatField()  
-    season_average_blocks = models.FloatField()  
-    season_average_personal_fouls = models.FloatField() 
-    season_average_fantasy_points = models.FloatField() 
-    season_average_double_doubles = models.FloatField()  
-    season_average_triple_doubles = models.FloatField()  
-    season_average_plus_minus = models.FloatField()
-
-    def __str__(self):
-        return f"{self.player.name} ({self.player.team})"
-
-
-class Player_LastFive_stats_model(models.Model):
-    player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True)
-    last_five_minutes_per_game = models.JSONField()  
-    last_five_points_per_game = models.JSONField()   
-    last_five_field_goals_made = models.JSONField()  
-    last_five_field_goals_attempted = models.JSONField()  
-    last_five_field_goal_percentage = models.JSONField()  
-    last_five_three_points_made = models.JSONField()  
-    last_five_three_points_attempted = models.JSONField()  
-    last_five_three_point_percentage = models.JSONField()  
-    last_five_free_throws_made = models.JSONField()  
-    last_five_free_throws_attempted = models.JSONField() 
-    last_five_free_throw_percentage = models.JSONField()  
-    last_five_offensive_rebounds = models.JSONField()  
-    last_five_defensive_rebounds = models.JSONField()
-    last_five_total_rebounds = models.JSONField()
-    last_five_assists = models.JSONField()
-    last_five_turnovers = models.JSONField()
-    last_five_steals = models.JSONField()  
-    last_five_blocks = models.JSONField()  
-    last_five_personal_fouls = models.JSONField()
-    last_five_fantasy_points = models.JSONField()
-    last_five_double_doubles = models.JSONField()  
-    last_five_triple_doubles = models.JSONField()  
-    last_five_plus_minus = models.JSONField()
+class NBAPlayerSeasonStats(models.Model):
+    player = models.ForeignKey(NBAPlayer, to_field='player_id', on_delete=models.CASCADE)
+    season_year = models.CharField(max_length=50)
+    team = models.CharField(max_length=50)
+    games_played = models.FloatField()
+    minutes_per_game = models.FloatField()
+    points_per_game = models.FloatField()
+    field_goals_made = models.FloatField()
+    field_goals_attempted = models.FloatField()
+    field_goal_percentage = models.FloatField()
+    three_points_made = models.FloatField()
+    three_points_attempted = models.FloatField()
+    three_point_percentage = models.FloatField()
+    free_throws_made = models.FloatField()
+    free_throws_attempted = models.FloatField()
+    free_throw_percentage = models.FloatField()
+    offensive_rebounds = models.FloatField()
+    defensive_rebounds = models.FloatField()
+    total_rebounds = models.FloatField()
+    assists = models.FloatField()
+    turnovers = models.FloatField()
+    steals = models.FloatField()
+    blocks = models.FloatField()
+    personal_fouls = models.FloatField()
+    fantasy_points = models.FloatField()
+    double_doubles = models.FloatField()
+    triple_doubles = models.FloatField()
+    plus_minus = models.FloatField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.player.name} ({self.player.team})"
+        return f"{self.player.full_name} - {self.season_year}"
+
+
+class NBAPlayersLast5Games(models.Model):
+    player = models.ForeignKey(NBAPlayer, to_field='player_id', on_delete=models.CASCADE)
+    game_date = models.DateField()
+    matchup = models.CharField(max_length=100)
+    win_loss = models.CharField(max_length=1)
+    minutes = models.FloatField()
+    points = models.FloatField()
+    field_goals_made = models.FloatField()
+    field_goals_attempted = models.FloatField()
+    field_goal_percentage = models.FloatField()
+    three_points_made = models.FloatField()
+    three_points_attempted = models.FloatField()
+    three_point_percentage = models.FloatField()
+    free_throws_made = models.FloatField()
+    free_throws_attempted = models.FloatField()
+    free_throw_percentage = models.FloatField()
+    offensive_rebounds = models.FloatField()
+    defensive_rebounds = models.FloatField()
+    total_rebounds = models.FloatField()
+    assists = models.FloatField()
+    steals = models.FloatField()
+    blocks = models.FloatField()
+    turnovers = models.FloatField()
+    personal_fouls = models.FloatField()
+    plus_minus = models.FloatField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('player', 'game_date')
+
+    def __str__(self):
+        return f"{self.player.full_name} - {self.game_date} ({self.matchup})"
