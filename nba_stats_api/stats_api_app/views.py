@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import NBAPlayer, NBAPlayerSeasonStats, NBAPlayersLast5Games
-from .serializers import PlayerSerializer, PlayerSeasonStatsSerializer, PlayerLastFiveStatsSerializer
+from .serializers import NBAPlayerSerializer, NBAPlayerSeasonStatsSerializer, NBAPlayersLast5GamesSerializer
 
 def home(request):
     return HttpResponse("Welcome to NBA Stats API")
@@ -12,10 +12,10 @@ def home(request):
 def player_list(request):
     if request.method == 'GET':
         players = NBAPlayer.objects.all()
-        serializer = PlayerSerializer(players, many=True)
+        serializer = NBAPlayerSerializer(players, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        serializer = PlayerSerializer(data=request.data)
+        serializer = NBAPlayerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -29,11 +29,11 @@ def player_season_details(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = PlayerSeasonStatsSerializer(player_stats)
+        serializer = NBAPlayerSeasonStatsSerializer(player_stats)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = PlayerSeasonStatsSerializer(player_stats, data=request.data)
+        serializer = NBAPlayerSeasonStatsSerializer(player_stats, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -51,11 +51,11 @@ def player_last_five_details(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = PlayerLastFiveStatsSerializer(player_stats)
+        serializer = NBAPlayersLast5GamesSerializer(player_stats)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = PlayerLastFiveStatsSerializer(player_stats, data=request.data)
+        serializer = NBAPlayersLast5GamesSerializer(player_stats, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
