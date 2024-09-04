@@ -1,21 +1,17 @@
 from rest_framework import serializers
 from .models import NBAPlayer, NBAPlayerSeasonStats, NBAPlayersLast5Games
 
-class PlayerSerializer(serializers.ModelSerializer):
+class NBAPlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = NBAPlayer
-        fields = ['id', 'name', 'team']
+        fields = '__all__'  # Or list all fields explicitly if you prefer
 
-class PlayerSeasonStatsSerializer(serializers.ModelSerializer):
-    player = PlayerSerializer()  # Nested serializer
-
+class NBAPlayerSeasonStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NBAPlayerSeasonStats
-        fields = '__all__'
+        fields = '__all__'  # Or list all fields explicitly if you prefer
 
-class PlayerLastFiveStatsSerializer(serializers.ModelSerializer):
-    player = PlayerSerializer()  # Nested serializer
-
+class NBAPlayersLast5GamesSerializer(serializers.ModelSerializer):
     class Meta:
         model = NBAPlayersLast5Games
-        fields = '__all__'
+        fields = '__all__'  # Or list all fields explicitly if you prefer

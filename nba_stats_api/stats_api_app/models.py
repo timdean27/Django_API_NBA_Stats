@@ -8,6 +8,9 @@ class NBAPlayer(models.Model):
     img_src = models.URLField(max_length=255)
     player_id = models.CharField(max_length=255, unique=True)
 
+    class Meta:
+        db_table = 'nba_players'  # This must match the existing table name
+
     def __str__(self):
         return self.full_name
 
@@ -43,6 +46,9 @@ class NBAPlayerSeasonStats(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'nba_player_season_stats'  # This must match the existing table name
+
     def __str__(self):
         return f"{self.player.full_name} - {self.season_year}"
 
@@ -76,6 +82,7 @@ class NBAPlayersLast5Games(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+        db_table = 'nba_players_last_5_games'  # This must match the existing table name
         unique_together = ('player', 'game_date')
 
     def __str__(self):
