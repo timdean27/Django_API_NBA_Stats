@@ -21,46 +21,30 @@ def player_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def player_season_details(request, pk):
-    try:
-        player_stats = NBAPlayerSeasonStats.objects.get(player_id=pk)
-    except NBAPlayerSeasonStats.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
+@api_view(['GET', 'POST'])
+def player_season_details(request, player_id):
     if request.method == 'GET':
-        serializer = NBAPlayerSeasonStatsSerializer(player_stats)
+        player_stats = NBAPlayerSeasonStats.objects.filter(player_id=player_id)
+        serializer = NBAPlayerSeasonStatsSerializer(player_stats, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = NBAPlayerSeasonStatsSerializer(player_stats, data=request.data)
+    elif request.method == 'POST':
+        serializer = NBAPlayerSeasonStatsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        player_stats.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def player_last_five_details(request, pk):
-    try:
-        player_stats = NBAPlayersLast5Games.objects.get(player_id=pk)
-    except NBAPlayersLast5Games.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
+@api_view(['GET', 'POST'])
+def player_last_five_details(request, player_id):
     if request.method == 'GET':
-        serializer = NBAPlayersLast5GamesSerializer(player_stats)
+        player_stats = NBAPlayersLast5Games.objects.filter(player_id=player_id)
+        serializer = NBAPlayersLast5GamesSerializer(player_stats, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = NBAPlayersLast5GamesSerializer(player_stats, data=request.data)
+    elif request.method == 'POST':
+        serializer = NBAPlayersLast5GamesSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        player_stats.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
