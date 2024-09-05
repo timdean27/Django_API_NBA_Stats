@@ -76,16 +76,33 @@ WSGI_APPLICATION = 'nba_stats_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('POSTGRES_DATABASE'),   # Database name
+#         'USER': os.environ.get('POSTGRES_USER'),       # PostgreSQL username
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),  # PostgreSQL password
+#         'HOST': os.environ.get('POSTGRES_HOST'),       # Database host
+#         'PORT': os.environ.get('POSTGRES_PORT', '5432'),  # Default PostgreSQL port
+#     }
+# }
+
+
+DB_NAME = os.environ.get('RDS_DB_NAME')
+DB_USERNAME = os.environ.get('RDS_USERNAME')
+DB_PASSWORD = os.environ.get('RDS_PASSWORD')
+DB_HOST = os.environ.get('RDS_HOST')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DATABASE'),   # Database name
-        'USER': os.environ.get('POSTGRES_USER'),       # PostgreSQL username
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),  # PostgreSQL password
-        'HOST': os.environ.get('POSTGRES_HOST'),       # Database host
-        'PORT': os.environ.get('POSTGRES_PORT', '5432'),  # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DB_NAME,
+        'USER': DB_USERNAME,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
