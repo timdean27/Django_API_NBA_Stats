@@ -1,0 +1,35 @@
+create folder .ebextensions on route of project 
+
+
+create file in .ebextensions
+django.config 
+
+add: 
+option_settings:
+  aws:elasticbeanstalk:container:python:
+    WSGIPath: nba_stats_api.wsgi:application
+
+
+create static-files.config
+
+add:
+
+option_settings:
+  aws:elasticbeanstalk:environment:proxy:staticfiles:
+    /static: static
+
+
+
+in porject settings
+
+add elasticbeanstalk url to root
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'NbaDjangoApplication-env.eba-fpdumciw.us-east-2.elasticbeanstalk.com']
+
+
+adjust statis file in settings
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+run:
+python manage.py collectstatic 
