@@ -1,0 +1,57 @@
+    . venv/Scripts/activate
+
+### Check Python and pip versions
+1. In Bash:
+    bash
+    pip --version
+    
+2. In Command Prompt (CMD):
+    cmd
+    python --version
+    
+## Setting Up a Virtual Environment
+### Create a virtual environment
+1. In Bash:
+    bash
+    python -m venv myenv
+    
+    or
+    bash
+    python -m venv .venv  # The dot makes it a hidden folder; can see with command ls -a
+    
+    **We are naming it .venv; it can be named arbitrarily.**
+
+### Activate the virtual environment
+1. On Windows:
+    cmd
+    venv\Scripts\activate
+    
+2. On Bash:
+    - In the folder outside of `myvenv`:
+    bash
+    . venv/Scripts/activate
+    
+    **You should see (venv)**
+
+### Verify virtual environment
+1. Type `pip freeze` to see only packages in that environment, not global packages.
+
+### Deactivate virtual environment
+1. Type:
+    bash
+    deactivate
+    
+
+### List dependencies in `requirements.txt`
+1. To push the dependencies to the `requirements.txt` file:
+    bash
+    pip freeze > requirements.txt
+    
+2. To see what's in the requirements file, use:
+    bash
+    cat requirements.txt
+    
+### Install dependencies from `requirements.txt`
+1. Use:
+    bash
+    pip install -r requirements.txt

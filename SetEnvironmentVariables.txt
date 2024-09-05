@@ -1,0 +1,48 @@
+to set the variables 
+export POSTGRES_HOST=localhost
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=Fishboy@27!
+export POSTGRES_DATABASE=nba_data_from_playwright
+
+to check the variables 
+echo $POSTGRES_HOST
+echo $POSTGRES_USER
+echo $POSTGRES_PASSWORD
+echo $POSTGRES_DATABASE
+
+
+
+Permanent Environment Variables
+
+If you want these environment variables to be set automatically for every terminal session,
+ you should add them to your shell profile file. For example, add them to .bashrc
+
+nano ~/.bashrc
+
+export POSTGRES_HOST=localhost
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=Fishboy@27!
+export POSTGRES_DATABASE=nba_data_from_playwright
+
+Save and close the file (Ctrl+O to write out and Ctrl+X to exit in nano).
+
+Reload the profile file to apply the changes:
+source ~/.bashrc 
+
+
+
+# Step 1: Create and activate a virtual environment
+python -m venv myenv
+source myenv/bin/activate
+
+# Step 2: Install required packages
+pip install -r requirements.txt
+
+# Step 3: Set environment variables
+export POSTGRES_HOST=localhost
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=Fishboy@27!
+export POSTGRES_DATABASE=nba_data_from_playwright
+
+# Step 4: Run the Python script
+python main_mySQL.py

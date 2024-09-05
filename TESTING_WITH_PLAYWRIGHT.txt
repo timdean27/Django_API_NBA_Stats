@@ -2,7 +2,16 @@ https://playwright.dev/python/docs/api-testing
 
 
 Run the Tests: Execute pytest in the terminal:
-pip install pytest
+pip install pytest-playwright
+
+playwright install
+
+
+Add Example Test
+Create a file that follows the test_ prefix convention, such as test_example.py, 
+inside the current working directory or in a sub-directory with the code below. 
+Make sure your test name also follows the test_ prefix convention.
+
 type into terminal:
 pytest
 

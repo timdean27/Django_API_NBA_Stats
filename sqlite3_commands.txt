@@ -1,0 +1,39 @@
+************Running in bash*************
+python manage.py dbshell
+
+
+View Tables:
+To list all the tables in the database, use:
+.table
+
+View the Schema of a Specific Table:
+To view the schema (structure) of a specific table, use:
+.schema table_name
+example:
+.schema stats_api_app_nbaplayer
+.schema stats_api_app_nbaplayerseasonstats
+.schema stats_api_app_nbaplayerslast5games
+
+View the Schema of All Tables:
+To view the schema for all tables in the database, use:
+.schema
+
+
+Close the SQLite3 Command-Line Interface:
+To exit the SQLite shell, use:
+.exit
+
+
+************Running in Comand prompt*************
+Navigate to SQLite Directory:
+Open your terminal or command prompt and navigate to the directory where SQLite is installed:
+cd C:\sqlite
+
+
+Open SQLite3 Shell
+Start the SQLite3 command-line interface:
+sqlite3
+
+Open the SQLite Database:
+Once inside the SQLite shell, open your database by providing the full path to your database file:
+sqlite3 c:\Users\timde\Documents\CodeVault\PythonProjects\NBA_playwright\NBA-DJango_api\nba_stats_api\db.sqlite3
