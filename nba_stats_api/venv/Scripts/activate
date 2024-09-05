@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\timde\Documents\CodeVault\PythonProjects\NBA_playwright\NBA-DJango_api\venv"
+VIRTUAL_ENV="C:\Users\timde\Documents\CodeVault\PythonProjects\NBA_playwright\NBA-DJango_api\nba_stats_api\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
