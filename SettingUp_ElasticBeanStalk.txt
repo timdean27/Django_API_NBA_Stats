@@ -1,35 +1,46 @@
-create folder .ebextensions on route of project 
+# AWS Elastic Beanstalk Configuration for Django
 
+## 1. Create `.ebextensions` Folder
 
-create file in .ebextensions
-django.config 
+Navigate to the root of your project and create the `.ebextensions` folder:
 
-add: 
-option_settings:
-  aws:elasticbeanstalk:container:python:
-    WSGIPath: nba_stats_api.wsgi:application
+    mkdir .ebextensions
 
+## 2. Create Configuration Files in `.ebextensions`
 
-create static-files.config
+### Create `django.config`
 
-add:
+In the `.ebextensions` folder, create a file named `django.config` with the following content:
 
-option_settings:
-  aws:elasticbeanstalk:environment:proxy:staticfiles:
-    /static: static
+    option_settings:
+      aws:elasticbeanstalk:container:python:
+        WSGIPath: nba_stats_api.wsgi:application
 
+### Create `static-files.config`
 
+In the `.ebextensions` folder, create a file named `static-files.config` with the following content:
 
-in porject settings
+    option_settings:
+      aws:elasticbeanstalk:environment:proxy:staticfiles:
+        /static: static
 
-add elasticbeanstalk url to root
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'NbaDjangoApplication-env.eba-fpdumciw.us-east-2.elasticbeanstalk.com']
+## 3. Update Django Settings
 
+### Add Elastic Beanstalk URL to `ALLOWED_HOSTS`
 
-adjust statis file in settings
+In your Django `settings.py`, update `ALLOWED_HOSTS` to include your Elastic Beanstalk URL:
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'NbaDjangoApplication-env.eba-fpdumciw.us-east-2.elasticbeanstalk.com']
 
-run:
-python manage.py collectstatic 
+### Adjust Static Files Settings
+
+Update your `settings.py` to include:
+
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+## 4. Collect Static Files
+
+Run the following command to collect static files:
+
+    python manage.py collectstatic
