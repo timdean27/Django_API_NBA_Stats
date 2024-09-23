@@ -21,6 +21,24 @@ def player_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def all_player_season_stats(request):
+    """
+    Retrieve all data from NBAPlayerSeasonStats.
+    """
+    stats = NBAPlayerSeasonStats.objects.all()
+    serializer = NBAPlayerSeasonStatsSerializer(stats, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def all_player_last_five_games(request):
+    """
+    Retrieve all data from NBAPlayersLast5Games.
+    """
+    stats = NBAPlayersLast5Games.objects.all()
+    serializer = NBAPlayersLast5GamesSerializer(stats, many=True)
+    return Response(serializer.data)
+
 @api_view(['GET', 'POST'])
 def player_season_details(request, player_id):
     if request.method == 'GET':
@@ -70,7 +88,7 @@ def player_last_five_details(request, player_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def single_player_last_five_details(request, player_id, id):
     try:

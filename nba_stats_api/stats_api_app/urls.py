@@ -1,11 +1,13 @@
 from django.urls import path
-from .views import home, player_list, player_season_details, single_player_season_details, player_last_five_details, single_player_last_five_details
+from . import views
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('api/players/', player_list, name='player-list'),
-    path('api/player/season/<int:player_id>/', player_season_details, name='player-season-list'),
-    path('api/player/season/<int:player_id>/<int:id>/', single_player_season_details, name='single_player_season_details'),
-    path('api/player/last5/<int:player_id>/', player_last_five_details, name='player-last-five-list'),
-    path('api/player/last5/<int:player_id>/<int:id>/', single_player_last_five_details, name='single_player_last_five_details'),
+    path('', views.home, name='home'),
+    path('api/players/', views.player_list, name='player_list'),
+    path('api/players/season/', views.all_player_season_stats, name='all_player_season_stats'),  # New route
+    path('api/players/last5/', views.all_player_last_five_games, name='all_player_last_five_games'),  # New route
+    path('api/players/season/<int:player_id>', views.player_season_details, name='player_season_details'),
+    path('api/players/season/<int:player_id>/<int:id>/', views.single_player_season_details, name='single_player_season_details'),
+    path('api/players/last5/<int:player_id>', views.player_last_five_details, name='player_last_five_details'),
+    path('api/players/last5/<int:player_id>/<int:id>/', views.single_player_last_five_details, name='single_player_last_five_details'),
 ]
