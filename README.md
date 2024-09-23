@@ -30,41 +30,6 @@ Here’s how it could be applied:
 
 This data-driven approach to fantasy sports could provide a **competitive advantage**, making your API an essential tool for enthusiasts looking to maximize their chances of winning.
 
-## Why It Matters
-
-For recruiters and companies in sports analytics or fantasy sports, this API demonstrates an ability to:
-
-- **Automate complex data collection** and create scalable systems capable of delivering valuable insights.
-- **Use modern cloud infrastructure (AWS EC2, RDS)** to ensure reliability and high availability.
-- **Integrate advanced web-scraping technologies** with Django and PostgreSQL to create seamless user experiences.
-- **Solve real-world problems in the sports and entertainment industries**, with direct applications to businesses that analyze player performance or manage fantasy sports platforms.
-
-By combining **automation**, **cloud infrastructure**, and **real-time analytics**, this project highlights a solid foundation in developing data-driven solutions, particularly in a competitive and fast-paced environment like fantasy sports.
-
----
-
-### Environment Variables
-
-Set up the following environment variables with your PostgreSQL configuration:
-
-```
-postgres_host = os.environ.get('POSTGRES_HOST')
-postgres_user = os.environ.get('POSTGRES_USER')
-postgres_password = os.environ.get('POSTGRES_PASSWORD')
-postgres_database = os.environ.get('POSTGRES_DATABASE')
-```
-You can set these in your terminal session or include them in a `.env` file (and use a library like `python-dotenv` to load them).
-
-### Database Setup
-
-The `Check_or_Create_DB` class will create the database and table if they do not exist. It assumes that the environment variables are properly set.
-
-## Usage
-
-1. **Run the Main Script**: This will execute the entire workflow.
-    ```bash
-    python Main_Run.py
-    ```
 
 ## API Endpoints
 
