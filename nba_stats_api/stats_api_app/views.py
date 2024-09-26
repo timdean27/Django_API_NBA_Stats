@@ -5,6 +5,8 @@ from rest_framework import status
 from .models import NBAPlayer, NBAPlayerSeasonStats, NBAPlayersLast5Games
 from .serializers import NBAPlayerSerializer, NBAPlayerSeasonStatsSerializer, NBAPlayersLast5GamesSerializer
 
+from django.db.models import Max  # Import Max for aggregation
+
 def home(request):
     return HttpResponse("Welcome to NBA Stats API")
 
@@ -24,20 +26,44 @@ def player_list(request):
 @api_view(['GET'])
 def all_player_season_stats(request):
     """
-    Retrieve all data from NBAPlayerSeasonStats.
+    Retrieve the most recent season stats for all players for the 2023-2024 season.
     """
-    stats = NBAPlayerSeasonStats.objects.all()
-    serializer = NBAPlayerSeasonStatsSerializer(stats, many=True)
-    return Response(serializer.data)
+    try:
+        # Get distinct players with the most recent season records for 2023-24
+        players_with_season = NBAPlayerSeasonStats.objects.filter(season_year='2023-24').values('player_id').annotate(latest_date=Max('date_created'))
+        print(f"Players with season data: {players_with_season}")  # Debug output
+
+        # Fetch the most recent season for each player
+        season_stats = [
+            NBAPlayerSeasonStats.objects.filter(player_id=player['player_id'], date_created=player['latest_date']).first()
+            for player in players_with_season
+        ]
+        print(f"Season Stats: {season_stats}")  # Debug output
+
+        # Serialize the filtered records
+        serializer = NBAPlayerSeasonStatsSerializer(season_stats, many=True)
+        return Response(serializer.data)
+    
+    except Exception as e:
+        print(f"Error: {e}")  # Capture error output
+        return Response({"error": str(e)}, status=500)
 
 @api_view(['GET'])
 def all_player_last_five_games(request):
     """
-    Retrieve all data from NBAPlayersLast5Games.
+    Retrieve the most recent last 5 games stats for all players.
     """
-    stats = NBAPlayersLast5Games.objects.all()
-    serializer = NBAPlayersLast5GamesSerializer(stats, many=True)
+    # Get distinct players with the most recent game records
+    players_with_games = NBAPlayersLast5Games.objects.values('player_id').annotate(latest_date=Max('date_created'))
+    # Fetch the most recent last 5 games for each player
+    last_five_games = [
+        NBAPlayersLast5Games.objects.filter(player_id=player['player_id'], date_created=player['latest_date']).first()
+        for player in players_with_games
+    ]
+    # Serialize the filtered records
+    serializer = NBAPlayersLast5GamesSerializer(last_five_games, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET', 'POST'])
 def player_season_details(request, player_id):
