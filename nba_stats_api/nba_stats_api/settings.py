@@ -56,12 +56,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", 
-     '127.0.0.1', 
-     'localhost', 
-     'NbaDjangoApplication-env.eba-fpdumciw.us-east-2.elasticbeanstalk.com'
+    'http://127.0.0.1:8000',  # If you're running the Django dev server locally
+    'http://localhost:3000',  # For local development if you're using React or another frontend
+    'https://NbaDjangoApplication-env.eba-fpdumciw.us-east-2.elasticbeanstalk.com',  # Elastic Beanstalk app
 ]
-
 
 
 ROOT_URLCONF = 'nba_stats_api.urls'
