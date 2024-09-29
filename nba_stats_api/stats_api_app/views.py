@@ -51,18 +51,33 @@ def all_player_season_stats(request):
 @api_view(['GET'])
 def all_player_last_five_games(request):
     """
-    Retrieve the most recent last 5 games stats for all players.
+    Retrieve the most recent last 5 games stats for all players in 2024.
     """
-    # Get distinct players with the most recent game records
-    players_with_games = NBAPlayersLast5Games.objects.values('player_id').annotate(latest_date=Max('date_created'))
-    # Fetch the most recent last 5 games for each player
+    # Filter to get distinct players with their most recent game dates in 2024
+    players_with_games = (
+        NBAPlayersLast5Games.objects
+        .filter(game_date__startswith='2024')  # Filter games from 2024
+        .values('player_id')  # Group by player
+        .annotate(latest_date=Max('date_created'))  # Get the most recent 'date_created' per player
+    )
+
+    # Fetch the most recent last 5 games for each player in 2024
     last_five_games = [
-        NBAPlayersLast5Games.objects.filter(player_id=player['player_id'], date_created=player['latest_date']).first()
+        NBAPlayersLast5Games.objects.filter(
+            player_id=player['player_id'], 
+            game_date__startswith='2024',  # Ensure only games from 2024 are included
+            date_created=player['latest_date']  # Use the most recent date_created
+        ).order_by('-game_date')[:5]  # Limit to the last 5 games, ordered by game_date
         for player in players_with_games
     ]
+
+    # Flatten the list of last_five_games
+    last_five_games = [game for sublist in last_five_games for game in sublist]
+
     # Serialize the filtered records
     serializer = NBAPlayersLast5GamesSerializer(last_five_games, many=True)
     return Response(serializer.data)
+
 
 
 @api_view(['GET', 'POST'])
